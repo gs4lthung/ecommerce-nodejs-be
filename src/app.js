@@ -4,17 +4,18 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
 const { checkOverload } = require("./helpers/check.connect");
+require("dotenv").config();
 
+// init middlewares
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(compression());
 
-require("./database/init.mongodb");
+// init database
+require("./database/init.database");
 checkOverload();
 
-app.get("/", (req, res) => {
-  return res.status(200).json({
-    message: "Ecommerce API",
-  });
-});
+// init routes
+app.use("/", require("./routes/index"));
+
 module.exports = app;
