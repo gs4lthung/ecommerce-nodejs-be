@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const {
-  db: { userName, password, cluster },
+  db: { name, userName, password, cluster },
 } = require("../configs/config.mongodb");
 const { countConnect } = require("../helpers/check.connect");
 
-const connectString = `mongodb+srv://${userName}:${password}@${cluster}/?retryWrites=true&w=majority&appName=Cluster0`;
-
+const connectString = `mongodb+srv://${userName}:${password}@${cluster}/${name}?retryWrites=true&w=majority&appName=Cluster0`;
+console.log(connectString);
 class Database {
   constructor() {
     this.connect();
