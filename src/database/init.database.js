@@ -5,7 +5,6 @@ const {
 const { countConnect } = require("../helpers/check.connect");
 
 const connectString = `mongodb+srv://${userName}:${password}@${cluster}/${name}?retryWrites=true&w=majority&appName=Cluster0`;
-console.log(connectString);
 class Database {
   constructor() {
     this.connect();

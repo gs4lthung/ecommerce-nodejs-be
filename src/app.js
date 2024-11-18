@@ -4,6 +4,10 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
 const { checkOverload } = require("./helpers/check.connect");
+const {
+  checkNotFoundError,
+  handleErrorResponse,
+} = require("./middlewares/error.middleware");
 require("dotenv").config();
 
 // init middlewares
@@ -18,6 +22,10 @@ require("./database/init.database");
 checkOverload();
 
 // init routes
-app.use("/", require("./routes/index"));
+app.use("/", require("./routes"));
+
+// error handler
+app.use(checkNotFoundError);
+app.use(handleErrorResponse);
 
 module.exports = app;
