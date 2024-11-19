@@ -3,7 +3,6 @@ const chalk = require("chalk");
 
 const handleApiRequest = (req, res, next) => {
   const logger = getLogger("API_REQUEST");
-
   // Capture the start time to calculate response time later
   const startTime = new Date();
   const methodColor =
@@ -45,6 +44,10 @@ const handleApiRequest = (req, res, next) => {
       res.get("Content-Length") || 0
     } ${req.get("User-Agent")} ${chalk.yellow(duration + "ms")}`;
     logger.info(logMessage);
+
+    logger.info(`Params: ${chalk.bgGray(JSON.stringify(req.params))}`);
+    logger.info(`Query: ${chalk.bgGray(JSON.stringify(req.query))}`);
+    logger.info(`Body: ${chalk.bgGray(JSON.stringify(req.body))}`);
   });
   next();
 };
