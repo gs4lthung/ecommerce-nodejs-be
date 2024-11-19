@@ -1,13 +1,19 @@
+const chalk = require("chalk");
 const app = require("./src/app");
+const getLogger = require("./src/utils/logger");
+const logger = getLogger("SERVER");
 
 const PORT = process.env.PORT || 8386;
 
 const server = app.listen(PORT, () => {
-  console.log(`Server running on port`, PORT);
+  logger.info(
+    `Server is running at ${chalk.bgBlue("http://localhost:" + PORT)}`
+  );
 });
 
 process.on("SIGINT", () => {
   server.close(() => {
-    console.log("Server closed");
+    logger.info(chalk.bgGray("Server closed"));
+    process.exit(0);
   });
 });

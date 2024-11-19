@@ -1,16 +1,8 @@
 const checkNotFoundError = (req, res, next) => {
+  console.log(`Not Found: ${req.originalUrl}`);
   const error = new Error("Not Found");
   error.status = 404;
   next(error);
-};
-
-const handleErrorResponse = (error, req, res, next) => {
-  const statusCode = error.status || 500;
-  return res.status(statusCode).json({
-    status: "error",
-    code: statusCode,
-    message: error.message || "Internal Server Error",
-  });
 };
 
 const catchAsyncHandle = (fn) => {
@@ -19,4 +11,4 @@ const catchAsyncHandle = (fn) => {
   };
 };
 
-module.exports = { checkNotFoundError, handleErrorResponse, catchAsyncHandle };
+module.exports = { checkNotFoundError, catchAsyncHandle };

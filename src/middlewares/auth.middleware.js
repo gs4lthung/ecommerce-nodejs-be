@@ -1,4 +1,6 @@
+const chalk = require("chalk");
 const { findByKey } = require("../services/apikey.service");
+const getLogger = require("../utils/logger");
 
 const HEADER = {
   API_KEY: "x-api-key",
@@ -29,20 +31,21 @@ const checkApiKey = async (req, res, next) => {
 
 const checkPermission = (permission) => {
   return (req, res, next) => {
+    const logger = getLogger("CHECK_PERMISSION");
     if (!req.apiKey.permissions) {
       return res.status(403).json({
         message: "Permission Denied",
       });
     }
 
-    console.log("permission:::" + req.apiKey.permissions);
+    logger.info(`Permission: ${chalk.yellow(req.apiKey.permissions)}`);
     const validPermission = req.apiKey.permissions.includes(permission);
     if (!validPermission) {
       return res.status(403).json({
         message: "Permission Denied",
       });
     }
-    return next();
+    next();
   };
 };
 module.exports = { checkApiKey, checkPermission };

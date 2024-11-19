@@ -5,6 +5,9 @@ const KeyTokenService = require("./keytoken.service");
 const { createTokenPair } = require("../utils/auth.util");
 const { getInfoData } = require("../utils/response");
 const { BadRequestError } = require("../core/responses/error.response");
+const getLogger = require("../utils/logger");
+const chalk = require("chalk");
+const logger = getLogger("AUTH_SERVICE");
 
 const RoleShop = {
   SHOP: "SHOP",
@@ -31,8 +34,8 @@ class AuthService {
       const privateKey = crypto.randomBytes(64).toString("hex");
       const publicKey = crypto.randomBytes(64).toString("hex");
 
-      console.log("privateKey:", privateKey);
-      console.log("publicKey:", publicKey);
+      logger.info(`Private key: ${chalk.yellow(privateKey)}`);
+      logger.info(`Public key: ${chalk.yellow(publicKey)}`);
 
       const keyStore = await KeyTokenService.createKeyToken({
         userId: newShop._id,
@@ -52,7 +55,7 @@ class AuthService {
         publicKey,
         privateKey
       );
-      console.log("Create token pair:", tokens);
+      logger.info(`Access & Refresh tokens: ${chalk.yellow(tokens)}`);
 
       return {
         shop: getInfoData({

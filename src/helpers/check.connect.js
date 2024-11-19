@@ -1,6 +1,9 @@
 const { default: mongoose } = require("mongoose");
 const os = require("os");
+const getLogger = require("../utils/logger");
+const chalk = require("chalk");
 
+const logger = getLogger("CHECK_CONNECTION");
 const _SECONDS = 5000;
 
 const countConnect = () => {
@@ -12,13 +15,15 @@ const checkOverload = () => {
   setInterval(() => {
     const numConnections = countConnect();
     const numCores = os.cpus().length;
-    const memoryUsage = (process.memoryUsage().rss / 1024 / 1024);
+    const memoryUsage = process.memoryUsage().rss / 1024 / 1024;
 
-    console.log(`Number of connections:`, numConnections);
-    console.log(`Memory usage:`, memoryUsage, "MB");
+    logger.info(`Number of connections: ${chalk.yellow(numConnections)}`);
+    logger.info(`Memory usage: ${chalk.yellow(memoryUsage.toFixed(2))} MB`);
     const maxConnections = numCores * 5;
     if (numConnections > maxConnections) {
-      console.log("Connection overload!!!");
+      logger.warn(
+        `Overload, number of connections is exceed ${chalk.red(maxConnections)}`
+      );
     }
   }, _SECONDS);
 };

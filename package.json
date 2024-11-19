@@ -11,8 +11,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "chalk": "^4.1.0",
     "ecommerce-nodejs-be": "file:",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "install": "^0.13.0"
   },
   "devDependencies": {
     "bcrypt": "^5.1.1",
@@ -22,6 +24,6 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^8.8.1",
-    "morgan": "^1.10.0"
+    "winston": "^3.17.0"
   }
 }

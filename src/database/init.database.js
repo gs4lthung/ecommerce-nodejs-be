@@ -3,6 +3,9 @@ const {
   db: { name, userName, password, cluster },
 } = require("../configs/config.mongodb");
 const { countConnect } = require("../helpers/check.connect");
+const getLogger = require("../utils/logger");
+const chalk = require("chalk");
+const logger = getLogger("DATABASE");
 
 const connectString = `mongodb+srv://${userName}:${password}@${cluster}/${name}?retryWrites=true&w=majority&appName=Cluster0`;
 class Database {
@@ -18,10 +21,17 @@ class Database {
 
     switch (type) {
       case "mongodb":
+        const connectedDb = countConnect();
         mongoose
           .connect(connectString)
-          .then((_) => console.log("Connected to MongoDB:", countConnect()))
-          .catch((err) => console.log(err));
+          .then((_) =>
+            logger.info(
+              `Connected to ${chalk.yellow(name)} database: ${chalk.yellow(
+                connectedDb
+              )}`
+            )
+          )
+          .catch((err) => logger.error(err));
         break;
 
       default:

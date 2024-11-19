@@ -4,4 +4,13 @@ const getInfoData = ({ fields = [], object = {} }) => {
   return lodash.pick(object, fields);
 };
 
-module.exports = { getInfoData };
+const handleErrorResponse = (error, req, res, next) => {
+  const statusCode = error.status || 500;
+  return res.status(statusCode).json({
+    status: "error",
+    code: statusCode,
+    message: error.message || "Internal Server Error",
+  });
+};
+
+module.exports = { getInfoData, handleErrorResponse };

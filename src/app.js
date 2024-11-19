@@ -1,17 +1,16 @@
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
 const { checkOverload } = require("./helpers/check.connect");
 const {
   checkNotFoundError,
-  handleErrorResponse,
 } = require("./middlewares/error.middleware");
+const { handleErrorResponse } = require("./utils/response");
+const { handleApiRequest } = require("./middlewares/request.middleware");
 require("dotenv").config();
 
 // init middlewares
-app.use(morgan("dev"));
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
@@ -21,8 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 require("./database/init.database");
 checkOverload();
 
+// request handler
+app.use(handleApiRequest);
+
 // init routes
-app.use("/", require("./routes"));
+app.use("/", require("./routes/index"));
 
 // error handler
 app.use(checkNotFoundError);
