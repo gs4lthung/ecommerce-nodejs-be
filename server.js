@@ -7,13 +7,13 @@ const PORT = process.env.PORT || 8386;
 
 const server = app.listen(PORT, () => {
   logger.info(
-    `Server is running at ${chalk.bgBlue("http://localhost:" + PORT)}`
+    `Server is running at ${chalk.bgBlue("http://localhost:" + PORT + "/")}`
   );
 });
 
 process.on("SIGINT", () => {
   server.close(() => {
-    logger.info(chalk.bgGray("Server closed"));
+    logger.info(chalk.bgYellowBright("Server closed"));
     process.exit(0);
   });
 });
