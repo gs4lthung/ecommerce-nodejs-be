@@ -1,7 +1,7 @@
 const getLogger = require("../utils/logger");
 const chalk = require("chalk");
 
-const handleApiRequest = async (req, res, next) => {
+const handleApiRequest = (req, res, next) => {
   const logger = getLogger("API_REQUEST");
 
   // Capture the start time to calculate response time later
@@ -22,12 +22,12 @@ const handleApiRequest = async (req, res, next) => {
       : req.method === "OPTIONS"
       ? chalk.hex("#FF4500")
       : chalk.white;
-  req.method = methodColor(req.method);
+  const coloredMethod = methodColor(req.method);
 
   // Listen for the response to finish so we can log details after it's sent
   res.on("finish", () => {
-    if (req.originalUrl.includes('favicon.ico')) {
-      return
+    if (req.originalUrl.includes("favicon.ico")) {
+      return;
     }
 
     const statusColor =
@@ -36,12 +36,12 @@ const handleApiRequest = async (req, res, next) => {
         : res.statusCode < 500
         ? chalk.red
         : chalk.white;
-    res.statusCode = statusColor(res.statusCode);
+    const coloredStatusCode = statusColor(res.statusCode);
 
     const duration = new Date() - startTime;
-    const logMessage = `${req.ip} ${req.method} ${
+    const logMessage = `${req.ip} ${coloredMethod} ${
       req.originalUrl
-    } ${req.protocol.toUpperCase()}/${req.httpVersion} ${res.statusCode} ${
+    } ${req.protocol.toUpperCase()}/${req.httpVersion} ${coloredStatusCode} ${
       res.get("Content-Length") || 0
     } ${req.get("User-Agent")} ${chalk.yellow(duration + "ms")}`;
     logger.info(logMessage);
