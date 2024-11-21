@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken");
 const getLogger = require("./logger");
+const chalk = require("chalk");
+const logger = getLogger("AUTH_UTIL");
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
   try {
-    const logger = getLogger("CREATE_TOKEN_PAIR");
     const accessToken = jwt.sign(payload, publicKey, {
       expiresIn: "2 days",
     });
@@ -12,8 +13,11 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
     });
 
     jwt.verify(accessToken, publicKey, (err, decode) => {
-      if (err) logger.error(err);
-      else logger.info(decode);
+      if (err) logger.error(chalk.red("Failed to create token pair:") + err);
+      logger.info(
+        chalk.greenBright("Create token pair successfully:") +
+          JSON.stringify(decode)
+      );
     });
 
     return { accessToken, refreshToken };

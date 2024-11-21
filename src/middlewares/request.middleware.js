@@ -45,9 +45,9 @@ const handleApiRequest = (req, res, next) => {
     } ${req.get("User-Agent")} ${chalk.yellow(duration + "ms")}`;
     logger.info(logMessage);
 
-    logger.info(`Params: ${chalk.bgGray(JSON.stringify(req.params))}`);
-    logger.info(`Query: ${chalk.bgGray(JSON.stringify(req.query))}`);
-    logger.info(`Body: ${chalk.bgGray(JSON.stringify(req.body))}`);
+    logger.info(`${chalk.yellow("Params")}: ${JSON.stringify(req.params)}`);
+    logger.info(`${chalk.yellow("Query")}: ${JSON.stringify(req.query)}`);
+    logger.info(`${chalk.yellow("Body")}: ${JSON.stringify(req.body)}`);
   });
   next();
 };

@@ -15,8 +15,13 @@ class Database {
 
   connect(type = "mongodb") {
     if (1 === 1) {
-      mongoose.set("debug", true);
-      mongoose.set("debug", { color: true });
+      mongoose.set("debug", (collectionName, method, query, doc) => {
+        logger.info(
+          `${chalk.blueBright(collectionName)}.${chalk.yellow(method)}(${JSON.stringify(
+            query
+          )}, ${JSON.stringify(doc)})`
+        );
+      });
     }
 
     switch (type) {

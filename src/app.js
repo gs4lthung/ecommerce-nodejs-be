@@ -18,9 +18,9 @@ process.env.TZ = "Asia/Ho_Chi_Minh";
 // init session
 app.use(
   session({
-    cookie: { maxAge: process.env.SESSION_EXPIRES_IN }, // 1 day
+    cookie: { maxAge: parseInt(process.env.SESSION_EXPIRES_IN) },
     store: new MemoryStore({
-      checkPeriod: process.env.SESSION_EXPIRES_IN, // prune expired entries every 24h
+      checkPeriod: parseInt(process.env.SESSION_EXPIRES_IN),
     }),
     resave: false,
     secret: process.env.SESSION_SECRET,

@@ -4,9 +4,8 @@ const { catchAsyncHandle } = require("../../middlewares/error.middleware");
 
 const router = express.Router();
 
-router.post(
-  "/shop/signup",
-  catchAsyncHandle(authController.signUp)
-);
+router.post("/auth/shop/signup", catchAsyncHandle(authController.signUp));
+
+router.post("/auth/shop/login", catchAsyncHandle(authController.login));
 
 module.exports = router;
