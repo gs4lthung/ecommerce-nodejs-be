@@ -12,7 +12,6 @@ const {
 const getLogger = require("../utils/logger");
 const chalk = require("chalk");
 const { findByEmail } = require("./shop.service");
-const apikeyModel = require("../models/apikey.model");
 const logger = getLogger("AUTH_SERVICE");
 
 const RoleShop = {

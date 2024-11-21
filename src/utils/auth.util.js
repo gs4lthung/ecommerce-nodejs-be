@@ -13,9 +13,10 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
     });
 
     jwt.verify(accessToken, publicKey, (err, decode) => {
-      if (err) logger.error(chalk.red("Failed to create token pair:") + err);
+      if (err)
+        logger.error(chalk.blueBright("Failed to create token pair:") + err);
       logger.info(
-        chalk.greenBright("Create token pair successfully:") +
+        chalk.blueBright("Create token pair successfully:") +
           JSON.stringify(decode)
       );
     });
