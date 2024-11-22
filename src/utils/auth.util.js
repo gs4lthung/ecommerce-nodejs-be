@@ -2,14 +2,15 @@ const jwt = require("jsonwebtoken");
 const getLogger = require("./logger");
 const chalk = require("chalk");
 const logger = getLogger("AUTH_UTIL");
+require("dotenv").config();
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
   try {
     const accessToken = jwt.sign(payload, publicKey, {
-      expiresIn: "2 days",
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
     });
     const refreshToken = jwt.sign(payload, privateKey, {
-      expiresIn: "7 days",
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
     });
 
     jwt.verify(accessToken, publicKey, (err, decode) => {

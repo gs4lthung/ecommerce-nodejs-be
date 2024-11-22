@@ -2,9 +2,10 @@ const { default: mongoose } = require("mongoose");
 const os = require("os");
 const getLogger = require("../utils/logger");
 const chalk = require("chalk");
+require("dotenv").config();
 
 const logger = getLogger("CHECK_CONNECTION");
-const _SECONDS = 60 * 1000;
+const _SECONDS = parseInt(process.env.CHECK_CONNECTION_INTERVAL) * 1000;
 
 const countConnect = () => {
   const numConnections = mongoose.connections.length;
